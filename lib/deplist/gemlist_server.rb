@@ -10,7 +10,7 @@ class GemListServer
   end
 
   def get_dep
-    res = self.class.get('/rgems', @options)
+    res = self.class.get('/dependencies', @options)
 
     JSON.parse(res.to_json)
   end

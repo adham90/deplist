@@ -18,6 +18,7 @@ class OsDetector
     end
 
     private
+
     def os_name
       @os ||= (
         host_os = RbConfig::CONFIG['host_os']
