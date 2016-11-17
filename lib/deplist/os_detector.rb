@@ -13,6 +13,10 @@ class OsDetector
       os_name == 'macosx'
     end
 
+    def unknown?
+      (linux? || macosx?) == false
+    end
+
     private
     def os_name
       @os ||= (

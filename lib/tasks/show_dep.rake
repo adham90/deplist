@@ -13,7 +13,11 @@ namespace :dep do
     puts "Your system need to have this packages to be able to run your rails project:"
     puts sys_dep.join(', ')
     puts "Do you want to install missing dependencies(Y/n)?"
-    Installer.install(sys_dep) if get_input
+    begin
+      Installer.install(sys_dep) if get_input
+    rescue UnknownOS
+      puts "Unknown OS"
+    end
   end
 
   def get_input
