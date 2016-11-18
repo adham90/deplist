@@ -15,9 +15,21 @@ namespace :system_dependencies do
 
     begin
       if get_input
-        Installer.install(packages)
+        status = Installer.install(packages)
+        system('clear')
 
-        puts 'Life is better now, Goodbye my friend ;D'.green
+        unless status[:success].empty?
+          puts 'I have installed this packages for you :)'.yellow unless status[:fail].empty?
+          puts status[:success].join(', ').green
+          puts
+        end
+
+        unless status[:fail].empty?
+          puts "I'm sorry i can't install this packages :(".yellow
+          abort status[:fail].join(', ').red
+        end
+
+        abort 'Life is better now, Goodbye my friend ;D'.green
       end
 
     rescue UnknownOS

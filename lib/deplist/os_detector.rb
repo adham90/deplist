@@ -14,7 +14,7 @@ class OsDetector
     end
 
     def unknown?
-      (linux? || macosx?) == false
+      os_name == 'unknown'
     end
 
     private
@@ -28,7 +28,7 @@ class OsDetector
         when /linux/
           'linux'
         else
-          raise Error::WebDriverError, "unknown os: #{host_os.inspect}"
+          'unknown'
         end
       )
     end

@@ -4,9 +4,10 @@ require 'json'
 class GemListServer
   include HTTParty
   base_uri 'https://gemdep.herokuapp.com'
+  # base_uri 'http://localhost:3000'
 
   def initialize(gems)
-    @options = { query: {gems: gems, os: OsDetector.current_os} }
+    @options = { query: { gems: gems, os: OsDetector.current_os } }
   end
 
   def get_dependencies
