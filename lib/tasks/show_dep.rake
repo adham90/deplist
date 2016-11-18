@@ -1,28 +1,19 @@
 require 'bundler'
 
-namespace :dep do
+namespace :system_dependencies do
   desc "TODO"
   task :show => :environment do
     # get a list of project gems
-    gems = Bundler.load.specs.map { |spec| spec.name }
-    packages = GemListServer.new(gems).get_dep
-
-    # get list of system dependencies
-    sys_dep = packages.map do |pkg|
-      pkg['dependencies'].map{ |dep| dep['name'] }
-    end
-
-    sys_dep.flatten!
-    sys_dep.select! { |pkg| pkg_exists?(pkg) }
-    system('clear')
-    abort "You're good to go :D" if sys_dep.empty?
+    gems     = Bundler.load.specs.map { |spec| spec.name }
+    packages = GemListServer.new(gems).get_dependencies
+    abort "You're good to go :D" if packages.empty?
 
     puts "Your system need to have this packages to be able to run your rails project:"
-    puts sys_dep.join(', ')
+    puts packages.join(', ')
     puts "Do you want to install missing dependencies(Y/n)?"
 
     begin
-      Installer.install(sys_dep) if get_input
+      Installer.install(packages) if get_input
     rescue UnknownOS
       puts "Unknown OS"
     end
@@ -39,9 +30,5 @@ namespace :dep do
     else
       return false
     end
-  end
-
-  def pkg_exists?(pkg)
-    system("which #{pkg}")
   end
 end

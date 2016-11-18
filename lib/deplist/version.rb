@@ -1,3 +1,3 @@
 module Deplist
-  VERSION = "0.5.10"
+  VERSION = "0.5.16"
 end
