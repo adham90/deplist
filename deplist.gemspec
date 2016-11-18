@@ -28,4 +28,5 @@ install all your dependencies.}
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_dependency "httparty", "~> 0.14.0"
   spec.add_dependency "json"
+  spec.add_dependency "colorize", '~> 0.7.7'
 end
