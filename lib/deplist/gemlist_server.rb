@@ -3,7 +3,7 @@ require 'json'
 
 class GemListServer
   include HTTParty
-  base_uri 'http://localhost:3000'
+  base_uri 'https://gemdep.herokuapp.com'
 
   def initialize(gems)
     @options = { query: {gems: gems, os: OsDetector.current_os} }
