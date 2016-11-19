@@ -1,4 +1,5 @@
 require 'rbconfig'
+
 class OsDetector
   class << self
     def current_os

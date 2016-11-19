@@ -5,8 +5,34 @@ namespace :system_dependencies do
   desc 'TODO'
   task show: :environment do
     # get a list of project gems
-    gems     = Bundler.load.specs.map(&:name)
-    packages = GemListServer.new(gems).dependencies
+    gems         = Bundler.load.specs.map(&:name)
+    server       = GemListServer.new(gems)
+    packages     = server.dependencies
+    unknown_gems = server.unknown_gems
+
+    unless unknown_gems.empty?
+      # TODO: change this message
+      puts "I don't know this gems can you tell"\
+        'me what dependencies they need if you know(y/n)?'.yellow
+      puts unknown_gems.join(', ').red
+
+      if user_input
+        puts 'To abort type exit.'.yellow
+        puts 'To add multiple dependencies use ex(pkg1,pkg2).'.yellow
+        unknown_gems.each do |unknown_gem|
+          # TODO: Change this message
+          print "What about (#{unknown_gem}): ".yellow
+          STDOUT.flush
+          dependencies = STDIN.gets.chomp.split(/[\s,]+/)
+          break if dependencies == ['exit']
+          next if dependencies.empty?
+
+          server.create(unknown_gem, dependencies)
+          packages = packages.concat(dependencies)
+        end
+      end
+    end
+
     abort 'Life is good ;D'.green if packages.empty?
 
     puts 'Your system need to have this packages'\

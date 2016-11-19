@@ -7,19 +7,33 @@ class GemListServer
   # base_uri 'http://localhost:3000'
 
   def initialize(gems)
-    @options = { query: { gems: gems, os: OsDetector.current_os } }
+    @options  = { query: { gems: gems, os: OsDetector.current_os } }
+    @packages = load_packages(@options)
+  end
+
+  def create(unknown_gem, dependencies)
+    options = { body: { gem: unknown_gem, dependencies: dependencies } }
+
+    self.class.post('/system_lib', options)
   end
 
   def dependencies
-    system_dependencies = self.class.get('/dependencies', @options)
-    system_dependencies = JSON.parse(system_dependencies.to_json)
-    system_dependencies.select! { |pkg| !pkg_exists?(pkg) }
+    system_dependencies = @packages['dependencies'].select { |pkg| !pkg_exists?(pkg) }
     system('clear')
 
     system_dependencies
   end
 
+  def unknown_gems
+    @packages['unknown']
+  end
+
   private
+
+  def load_packages(options)
+    packages = self.class.get('/dependencies', options)
+    JSON.parse(packages.to_json)
+  end
 
   def pkg_exists?(pkg)
     system("which #{pkg}")
