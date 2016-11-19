@@ -14,11 +14,12 @@ class Installer
 
       packages.each do |pkg|
         status = send("#{os}_install", pkg)
-        if status == true
-          DepLogger.info("success to install this packages: #{pkg}")
+
+        if status
+          DepLogger.info("Succeeded to install: #{pkg}")
           success_list << pkg
         else
-          DepLogger.error("faild to install this packages: #{pkg}")
+          DepLogger.error("Failed to install: #{pkg}")
           fail_list << pkg
         end
       end
@@ -32,8 +33,7 @@ class Installer
     end
 
     def macosx_install(pkg)
-      # TODO: esc confirmation
-      system("sudo bower install #{pkg} --no-interactive")
+      system("bower install #{pkg} --no-interactive")
     end
   end
 end

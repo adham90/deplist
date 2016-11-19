@@ -2,7 +2,7 @@ require 'bundler'
 require 'colorize'
 
 namespace :system_dependencies do
-  desc 'TODO'
+  desc 'List system dependencies'
   task show: :environment do
     # get a list of project gems
     gems         = Bundler.load.specs.map(&:name)
@@ -10,15 +10,15 @@ namespace :system_dependencies do
     packages     = server.dependencies
     unknown_gems = server.unknown_gems
 
-    unless unknown_gems.empty?
+    if unknown_gems.any?
       # TODO: change this message
       puts "I don't know this gems can you tell"\
-        'me what dependencies they need if you know(y/n)?'.yellow
+        'me what dependencies they need if you know? (Y/n)'.yellow
       puts unknown_gems.join(', ').red
 
       if user_input
         puts 'To abort type exit.'.yellow
-        puts 'To add multiple dependencies use ex(pkg1,pkg2).'.yellow
+        puts 'To add multiple dependencies use e.g. pkg1,pkg2,...,pkgn.'.yellow
         unknown_gems.each do |unknown_gem|
           print "What about (#{unknown_gem}): ".yellow
           STDOUT.flush
@@ -27,7 +27,7 @@ namespace :system_dependencies do
           break if dependencies == ['exit']
           next if dependencies.empty?
 
-          server.create(unknown_gem, dependencies)
+          GemListServer.create(unknown_gem, dependencies)
           packages = packages.concat(dependencies)
         end
       end
@@ -35,24 +35,24 @@ namespace :system_dependencies do
 
     abort 'Life is good ;D'.green if packages.empty?
 
-    puts 'Your system need to have this packages'\
-      ' to be able to run your rails project:'.yellow
+    puts 'Your system needs to have these packages'\
+      ' to be able to run your Rails project:'.yellow
     puts packages.join(', ').red
-    puts 'Do you want to install missing dependencies(y/n)?'.blue
+    puts 'Do you want to install missing dependencies? (Y/n)'.blue
 
     begin
       if user_input
         status = Installer.install(packages)
         system('clear')
 
-        unless status[:success].empty?
-          puts 'I have installed this packages for you :)'.yellow
+        if status[:success].present?
+          puts 'I have installed these packages for you :)'.yellow
           puts status[:success].join(', ').green
           puts
         end
 
-        unless status[:fail].empty?
-          puts "I'm sorry i can't install this packages :(".yellow
+        if status[:fail].present?
+          puts "I'm sorry, I can't install these packages :(".yellow
           abort status[:fail].join(', ').red
         end
 
@@ -71,7 +71,7 @@ namespace :system_dependencies do
     when 'Y', 'y', "\r"
       return true
     else
-      puts 'Bye Bye My Friend'
+      puts 'Goodbye my friend'
       return false
     end
   end

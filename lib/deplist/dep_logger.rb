@@ -1,15 +1,26 @@
 require 'logger'
 
 class DepLogger
-  LOG_FILE = 'log/deplist.log'.freeze
+  class << self
+    LOG_DIR  = 'log'.freeze
+    LOG_FILE = "#{LOG_DIR}/deplist.log".freeze
 
-  def self.error(msg)
-    FileUtils.mkdir_p 'log'
-    Logger.new(LOG_FILE).error(msg)
-  end
+    def error(msg)
+      logger.error(msg)
+    end
 
-  def self.info(msg)
-    FileUtils.mkdir_p 'log'
-    Logger.new(LOG_FILE).info(msg)
+    def info(msg)
+      logger.info(msg)
+    end
+
+    private
+
+    def logger
+      FileUtils.mkdir_p(LOG_DIR)
+
+      @@logger ||= begin
+                     Logger.new(LOG_FILE)
+                   end
+    end
   end
 end
