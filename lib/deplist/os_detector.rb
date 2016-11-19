@@ -20,7 +20,7 @@ class OsDetector
     private
 
     def os_name
-      @os ||= (
+      @os ||= begin
         host_os = RbConfig::CONFIG['host_os']
         case host_os
         when /darwin|mac os/
@@ -30,7 +30,7 @@ class OsDetector
         else
           'unknown'
         end
-      )
+      end
     end
   end
 end

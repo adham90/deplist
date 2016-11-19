@@ -1,0 +1,7 @@
+AllCops:
+  Exclude:
+    - deplist.gemspec
+Style/Documentation:
+  Enabled: false
+Metrics/MethodLength:
+  Max: 11

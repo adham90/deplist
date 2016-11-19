@@ -1,7 +1,7 @@
 class Installer
   class << self
     def install(packages)
-      fail UnknownOS if OsDetector.unknown?
+      raise UnknownOS if OsDetector.unknown?
 
       setup(packages, OsDetector.current_os)
     end
@@ -10,11 +10,10 @@ class Installer
 
     def setup(packages, os)
       success_list = []
-      fail_list = []
+      fail_list    = []
 
       packages.each do |pkg|
         status = send("#{os}_install", pkg)
-
         if status == true
           success_list << pkg
         else

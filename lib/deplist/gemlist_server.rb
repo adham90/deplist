@@ -10,7 +10,7 @@ class GemListServer
     @options = { query: { gems: gems, os: OsDetector.current_os } }
   end
 
-  def get_dependencies
+  def dependencies
     system_dependencies = self.class.get('/dependencies', @options)
     system_dependencies = JSON.parse(system_dependencies.to_json)
     system_dependencies.select! { |pkg| !pkg_exists?(pkg) }
