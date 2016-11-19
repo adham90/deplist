@@ -12,7 +12,7 @@ class GemListServer
   end
 
   def create(unknown_gem, dependencies)
-    options = { body: { gem: unknown_gem, dependencies: dependencies } }
+    options = { body: { gem: unknown_gem, dependencies: dependencies, os: OsDetector.current_os } }
 
     self.class.post('/system_lib', options)
   end
