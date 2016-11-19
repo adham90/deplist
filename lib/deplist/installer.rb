@@ -15,8 +15,10 @@ class Installer
       packages.each do |pkg|
         status = send("#{os}_install", pkg)
         if status == true
+          DepLogger.info("success to install this packages: #{pkg}")
           success_list << pkg
         else
+          DepLogger.error("faild to install this packages: #{pkg}")
           fail_list << pkg
         end
       end

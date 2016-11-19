@@ -1,6 +1,7 @@
 require 'deplist'
 require 'rails'
-module YourGem
+
+module Deplist
   class Railtie < Rails::Railtie
     rake_tasks do
       load 'tasks/show_dep.rake'

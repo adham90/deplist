@@ -7,5 +7,7 @@
 /pkg/
 /spec/reports/
 /tmp/
+log/
+/log/
 /.overcommit
 .overcommit

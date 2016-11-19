@@ -20,10 +20,10 @@ namespace :system_dependencies do
         puts 'To abort type exit.'.yellow
         puts 'To add multiple dependencies use ex(pkg1,pkg2).'.yellow
         unknown_gems.each do |unknown_gem|
-          # TODO: Change this message
           print "What about (#{unknown_gem}): ".yellow
           STDOUT.flush
           dependencies = STDIN.gets.chomp.split(/[\s,]+/)
+
           break if dependencies == ['exit']
           next if dependencies.empty?
 
