@@ -6,7 +6,11 @@ Collects the project dependencies and operating system information, sends them t
 
 DepList detects missing system dependencies of gems you are using in your Rails project. It sends them to an external API which responds with a list of dependencies that your system needs to be able to run your project. DepList also asks you to add a list of dependencies for gems that it could not identify, and sends them back to the external API to populate its knowledge base.
 
-    NOTE: DepList will not ask you to install system packages you already have. In case DepList fails to install any packages, it will let you know the name of the packages so you can configure them manually. DepList keeps a log of all its operations in `log/deplist.log`.
+    NOTE:
+    DepList will not ask you to install system packages you already have.
+    In case DepList fails to install any packages, it will let you know the name of
+    the packages so you can install them manually.
+    DepList keeps a log of all its operations in `log/deplist.log`.
 
 ## Installation
 
