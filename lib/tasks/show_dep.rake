@@ -1,7 +1,7 @@
 require 'bundler'
 require 'colorize'
 
-namespace :system_dependencies do
+namespace :deplist do
   desc 'List system dependencies'
   task show: :environment do
     # get a list of project gems
@@ -13,7 +13,7 @@ namespace :system_dependencies do
     if unknown_gems.any?
       # TODO: change this message
       puts "I don't know this gems can you tell"\
-        'me what dependencies they need if you know? (Y/n)'.yellow
+        'me what dependencies they need if you know? (y/n)'.yellow
       puts unknown_gems.join(', ').red
 
       if user_input
@@ -38,12 +38,11 @@ namespace :system_dependencies do
     puts 'Your system needs to have these packages'\
       ' to be able to run your Rails project:'.yellow
     puts packages.join(', ').red
-    puts 'Do you want to install missing dependencies? (Y/n)'.blue
+    puts 'Do you want to install missing dependencies? (y/n)'.blue
 
     begin
       if user_input
         status = Installer.install(packages)
-        system('clear')
 
         if status[:success].present?
           puts 'I have installed these packages for you :)'.yellow

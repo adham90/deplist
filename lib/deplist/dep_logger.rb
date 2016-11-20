@@ -1,10 +1,10 @@
 require 'logger'
 
 class DepLogger
-  class << self
-    LOG_DIR  = 'log'.freeze
-    LOG_FILE = "#{LOG_DIR}/deplist.log".freeze
+  LOG_DIR  = 'log'.freeze
+  LOG_FILE = "#{LOG_DIR}/deplist.log".freeze
 
+  class << self
     def error(msg)
       logger.error(msg)
     end

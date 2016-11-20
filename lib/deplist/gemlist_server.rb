@@ -34,8 +34,6 @@ class GemListServer
   end
 
   def pkg_exists?(pkg)
-    res = system("which #{pkg}")
-    system('clear')
-    res
+    system("which #{pkg} >/dev/null 2>&1")
   end
 end
