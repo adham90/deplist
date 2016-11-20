@@ -28,8 +28,7 @@ class Installer
     end
 
     def linux_install(pkg)
-      # TODO: change pacman to 'apt-get -y install'
-      system("sudo pacman -S #{pkg} --noconfirm")
+      system("sudo apt-get -y install #{pkg}")
     end
 
     def macosx_install(pkg)

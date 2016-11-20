@@ -11,7 +11,6 @@ namespace :deplist do
     unknown_gems = server.unknown_gems
 
     if unknown_gems.any?
-      # TODO: change this message
       puts "I don't know this gems can you tell"\
         'me what dependencies they need if you know? (y/n)'.yellow
       puts unknown_gems.join(', ').red
